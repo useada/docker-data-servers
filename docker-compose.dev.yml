@@ -1,0 +1,40 @@
+version:  '3.0'
+services:
+
+  mysql:
+    image: mysql
+    volumes:
+      # - /etc/localtime:/etc/localtime:ro
+      - ./data/mysql:/var/lib/mysql:rw
+      - ./logs/mysql:/var/lib/mysql-logs:rw
+      # - ./dockerfiles/mysql/conf.d:/etc/mysql/conf.d:ro
+    command: --default-authentication-plugin=mysql_native_password
+    # restart: always
+    environment:
+        MYSQL_ROOT_PASSWORD: 123456
+        # MYSQL_DATABASE: lottery_api_sale
+        # MYSQL_USER: zhaojun
+        # MYSQL_PASSWORD: zhaojun
+    ports:
+      - 3306:3306
+    # deploy:
+    #   restart_policy:
+    #     condition: any
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 6600:8080
+
+  redis-db:
+    image: redis
+    volumes:
+      - ./data/redis:/data
+      # - /etc/localtime:/etc/localtime:ro
+    # deploy:
+    #   restart_policy:
+    #     condition: any
+    ports:
+      - 6379:6379
+
